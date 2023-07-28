@@ -1,3 +1,21 @@
-.square {
+#squareContainer {
  border-color: blue;
+ border-style: solid;
+ display:flex;
+}
+
+#masterContainer {
+    display:flex;
+    justify-content: center;
+    margin:0%;
+    align-items: center;
+
+}
+
+.square {
+    border-color: aqua;
+    border-style: solid;
+    display: flex;
+    width:80px;
+    height: 80px;
 }
