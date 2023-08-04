@@ -1,10 +1,20 @@
 let squareContainer;
+let colorMode = "black"
+let toggle = false
+genDivs()
+let resize = document.querySelector("button.resize");
+resize.addEventListener("click", (e) => {resizeGrid()});
+let rainbow =document.querySelector("button.rainbow");
+rainbow.addEventListener("click", (e) => {colorMode = rainbow});
+let black = document.querySelector("button.black");
+black.addEventListener("click", (e) => {colorMode = "black"});
+let select = document.querySelector('button.select');
 
 
 function genDivs(column) {
     column = column || 16;
-    let divWidth = 20/column + "rem";
-    let divHight = 20/column + "rem";
+    let divWidth = 40/column + "rem";
+    let divHight = 40/column + "rem";
     let container = document.getElementById("squareContainer");
     for(let i = 0; i < column; i++) {
       let row = document.createElement("div");
@@ -12,15 +22,45 @@ function genDivs(column) {
       for(let x = 1; x <= column; x++){
           let cell = document.createElement("div")
           cell.className = "square";
-          cell.innerText = (i * column) + x;
           row.appendChild(cell)
           const widthHight= document.createAttribute('style');
           widthHight.value = `width: ${divWidth}; height : ${divHight}` 
-          cell.setAttributeNode(widthHight);
-         
+          cell.setAttributeNode(widthHight); 
+          cell.addEventListener("mouseover", (e) => {colorGrid(cell)})
       }  
       container.appendChild(row) 
     }
-    document.getElementById('square').innerText = container.innerHTML;
+   }
+function resizeGrid () {
+  let answer = prompt("how many squares per side? Maximum is 100")
+  if (+answer < 1 || !Number.isInteger(+answer) || isNaN(+answer)){
+     alert("Please input in a positive integer.")
+     return;
+  } else if (+answer > 100) {
+  alert("Maximum grid is 100");
+  return;
+  } else {
+    removeGrid();
+    genDivs(+answer);
+  }
 }
-genDivs(24)
+function removeGrid() {
+  rows = document.querySelectorAll("div.row");
+  rows.forEach((row) => {
+    row.remove()
+  })
+}
+
+function colorGrid (cell) {
+  if (colorMode == "black") {
+    cell.style.backgroundColor = "black"
+  }else if (colorMode == rainbow) {
+    cell.style.backgroundColor = randomRGB();
+  }
+}
+function randomRGB() {
+  let r = Math.floor(Math.random() * 1000) % 256;
+  let g = Math.floor(Math.random() * 1000) % 256;
+  let b = Math.floor(Math.random() * 1000) % 256;
+  return `rgb(${r}, ${g}, ${b})`;
+}

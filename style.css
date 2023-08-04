@@ -13,9 +13,19 @@
 }
 
 .square {
-    border-color: aqua;
-    border-style: solid;
+    border-color: whitesmoke;
     display: flex;
     width:auto;
     height: auto;
+}
+
+h1, h2 {
+    display: flex;
+    justify-content: center;
+}
+
+control {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
