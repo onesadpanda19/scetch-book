@@ -1,15 +1,19 @@
 let squareContainer;
 let colorMode = "black"
+let colorSelect = ""
 let toggle = false
-genDivs()
 let resize = document.querySelector("button.resize");
 resize.addEventListener("click", (e) => {resizeGrid()});
 let rainbow =document.querySelector("button.rainbow");
 rainbow.addEventListener("click", (e) => {colorMode = rainbow});
 let black = document.querySelector("button.black");
 black.addEventListener("click", (e) => {colorMode = "black"});
-let select = document.querySelector('button.select');
-
+let select = document.querySelector(".select")
+select.addEventListener("input",(event) => {
+  colorMode = select
+  // here save the color they picked - and use it to style your square
+  colorSelect = event.target.value; // #234245
+})
 
 function genDivs(column) {
     column = column || 16;
@@ -56,6 +60,8 @@ function colorGrid (cell) {
     cell.style.backgroundColor = "black"
   }else if (colorMode == rainbow) {
     cell.style.backgroundColor = randomRGB();
+  }else if (colorMode == select) {
+    cell.style.backgroundColor = colorSelect
   }
 }
 function randomRGB() {
@@ -64,3 +70,4 @@ function randomRGB() {
   let b = Math.floor(Math.random() * 1000) % 256;
   return `rgb(${r}, ${g}, ${b})`;
 }
+genDivs()
